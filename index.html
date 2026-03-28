@@ -5,10 +5,10 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
     <title>EV Калькулятор</title>
     
-    <link rel="apple-touch-icon" href="https://cdn-icons-png.flaticon.com/512/1024/1024340.png">
+    <link rel="apple-touch-icon" href="https://cdn-icons-png.flaticon.com/512/10331/10331665.png">
     <meta name="apple-mobile-web-app-capable" content="yes">
     <meta name="apple-mobile-web-app-status-bar-style" content="default">
-    <meta name="apple-mobile-web-app-title" content="EV Calc">
+    <meta name="apple-mobile-web-app-title" content="EV">
 
     <style>
         :root { --primary: #1a73e8; --success: #2e7d32; --bg: #f8f9fa; }
@@ -55,16 +55,19 @@
         </div>
         <div class="form-group">
             <label>Батарея (кВт⋅год)</label>
-            <input type="number" id="cap" value="75" oninput="calc()">
+            <input type="number" id="cap" value="65" oninput="calc()">
         </div>
         <div class="form-group">
             <label>Зарядка (кВт)</label>
             <select id="pwr" onchange="calc()">
-                <option value="11">11 кВт</option>
-                <option value="22">22 кВт</option>
-                <option value="50" selected>50 кВт</option>
-                <option value="120">120 кВт</option>
-                <option value="250">250 кВт</option>
+                <option value="2.2">2.2 кВт (Розетка)</option>
+                <option value="3.2">3.2 кВт (Підсилена)</option>
+                <option value="7">7 кВт (Wallbox 1ф)</option>
+                <option value="11">11 кВт (Wallbox 3ф)</option>
+                <option value="22">22 кВт (AC Fast)</option>
+                <option value="50" selected>50 кВт (DC)</option>
+                <option value="120">120 кВт (SC v2)</option>
+                <option value="250">250 кВт (SC v3)</option>
             </select>
         </div>
         <div class="form-group">
