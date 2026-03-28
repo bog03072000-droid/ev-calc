@@ -2,24 +2,30 @@
 <html lang="uk">
 <head>
     <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>EV Expert Calculator</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
+    <title>EV Калькулятор</title>
+    
+    <link rel="apple-touch-icon" href="https://cdn-icons-png.flaticon.com/512/1024/1024340.png">
+    <meta name="apple-mobile-web-app-capable" content="yes">
+    <meta name="apple-mobile-web-app-status-bar-style" content="default">
+    <meta name="apple-mobile-web-app-title" content="EV Calc">
+
     <style>
         :root { --primary: #1a73e8; --success: #2e7d32; --bg: #f8f9fa; }
-        body { font-family: 'Segoe UI', system-ui, sans-serif; background-color: var(--bg); display: flex; justify-content: center; padding: 20px; color: #333; }
+        body { font-family: 'Segoe UI', system-ui, sans-serif; background-color: var(--bg); display: flex; justify-content: center; padding: 20px; color: #333; margin: 0; }
         .calculator { background: #fff; padding: 30px; border-radius: 20px; box-shadow: 0 10px 30px rgba(0,0,0,0.1); max-width: 480px; width: 100%; }
-        h2 { text-align: center; color: var(--primary); margin-bottom: 25px; font-weight: 800; }
+        h2 { text-align: center; color: var(--primary); margin-bottom: 25px; font-weight: 800; font-size: 28px; }
         .grid { display: grid; grid-template-columns: 1fr 1fr; gap: 15px; margin-bottom: 20px; }
         .full { grid-column: span 2; }
         label { display: block; margin-bottom: 6px; font-weight: 600; font-size: 13px; color: #666; }
-        input, select { width: 100%; padding: 12px; border: 1px solid #e0e0e0; border-radius: 10px; font-size: 14px; background: #fff; transition: all 0.2s; }
-        input:focus { border-color: var(--primary); box-shadow: 0 0 0 3px rgba(26,115,232,0.1); outline: none; }
+        input, select { width: 100%; padding: 12px; border: 1px solid #e0e0e0; border-radius: 10px; font-size: 14px; background: #fff; transition: all 0.2s; box-sizing: border-box; }
+        input:focus { border-color: var(--primary); outline: none; box-shadow: 0 0 0 3px rgba(26,115,232,0.1); }
         
         .results-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 12px; margin-top: 20px; }
         .res-card { background: #f1f8e9; padding: 15px; border-radius: 12px; text-align: center; border: 1px solid #dcedc8; }
         .res-card.blue { background: #e3f2fd; border-color: #bbdefb; }
         .res-label { font-size: 12px; color: #555; display: block; margin-bottom: 5px; }
-        .res-val { font-size: 18px; font-weight: 800; color: var(--success); }
+        .res-val { font-size: 20px; font-weight: 800; color: var(--success); }
         .blue .res-val { color: var(--primary); }
         
         .footer-info { margin-top: 15px; padding: 12px; background: #fffde7; border-radius: 10px; text-align: center; font-size: 14px; border: 1px solid #fff9c4; }
@@ -33,7 +39,7 @@
     <div class="grid">
         <div class="form-group">
             <label>Витрата (кВт/100км)</label>
-            <input type="number" id="cons" value="15.3" step="0.1" oninput="calc()">
+            <input type="number" id="cons" value="16.5" step="0.1" oninput="calc()">
         </div>
         <div class="form-group">
             <label>Деградація (%)</label>
@@ -49,17 +55,16 @@
         </div>
         <div class="form-group">
             <label>Батарея (кВт⋅год)</label>
-            <input type="number" id="cap" value="64" oninput="calc()">
+            <input type="number" id="cap" value="75" oninput="calc()">
         </div>
         <div class="form-group">
             <label>Зарядка (кВт)</label>
             <select id="pwr" onchange="calc()">
-                <option value="2.1">2.1 кВт</option>
-                <option value="3.2">3.2 кВт</option>
-                <option value="10.9">10.9 кВт</option>
+                <option value="11">11 кВт</option>
                 <option value="22">22 кВт</option>
                 <option value="50" selected>50 кВт</option>
-                <option value="160">160 кВт</option>
+                <option value="120">120 кВт</option>
+                <option value="250">250 кВт</option>
             </select>
         </div>
         <div class="form-group">
@@ -68,12 +73,7 @@
         </div>
         <div class="form-group">
             <label>Ціна (грн/кВт)</label>
-            <select id="price" onchange="calc()">
-                <option value="3.8">3.8 грн</option>
-                <option value="20">20 грн</option>
-                <option value="21" selected>21 грн</option>
-                <option value="22">22 грн</option>
-            </select>
+            <input type="number" id="price" value="21.7" step="0.1" oninput="calc()">
         </div>
     </div>
 
@@ -116,11 +116,8 @@
         
         const range = (cons > 0) ? (energy / (cons / 100)) * season : 0;
         const sessionCost = energy * price;
-        
-        // Розрахунок вартості 100 км з урахуванням втрат взимку
         const cost100 = (cons / season) * price;
 
-        // Повна зарядка
         const fHDec = actualCap / pwr;
         const h = Math.floor(fHDec);
         const m = Math.round((fHDec - h) * 60);
